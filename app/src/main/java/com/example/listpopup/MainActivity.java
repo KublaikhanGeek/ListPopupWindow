@@ -2,6 +2,7 @@ package com.example.listpopup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.ListPopupWindow;
 import android.widget.ListView;
 import android.widget.PopupMenu;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -102,8 +104,6 @@ public class MainActivity extends AppCompatActivity {
         */
         mEditText = (EditText) findViewById(R.id.editText1);
         initPopView();
-        mListPop.setAnchorView(mEditText);//设置ListPopupWindow的锚点，即关联PopupWindow的显示位置和这个锚点
-        mListPop.setModal(true);//设置是否是模式
         mEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,8 +130,18 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        mListPop = new ListPopupWindow(this);
         LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
+        mListPop = new ListPopupWindow(this, null, android.R.attr.popupMenuStyle);
+        mListPop.setModal(true);//设置是否是模式
+        mListPop.setAnchorView(mEditText);//设置ListPopupWindow的锚点，即关联PopupWindow的显示位置和这个锚点
+        mListPop.setInputMethodMode(PopupWindow.INPUT_METHOD_NOT_NEEDED);
+        Rect bgPadding = new Rect();
+        mListPop.getBackground().getPadding(bgPadding);
+
+        int popupWidth = this.getResources().getDimensionPixelSize(R.dimen.menu_width)
+                + bgPadding.left + bgPadding.right;
+
+        mListPop.setWidth(popupWidth);
         BaseAdapter listAdapter = new TypedListAdapter(menuItems, inflater);
         mListPop.setAdapter(listAdapter);
     }
