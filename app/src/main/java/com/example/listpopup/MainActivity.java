@@ -263,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
                 // Save references to all the buttons.
                 for (int i = 0; i < numItems; i++) {
                     holder.buttons[i] =
-                            (ImageButton) convertView.findViewById(BUTTON_IDS[i]);
+                            (ImageView) convertView.findViewById(BUTTON_IDS[i]);
                 }
 
                 // Remove unused menu items.
@@ -284,7 +284,7 @@ public class MainActivity extends AppCompatActivity {
             return convertView;
         }
 
-        private void setupImageButton(ImageButton button, final MenuItem item) {
+        private void setupImageButton(ImageView button, final MenuItem item) {
             // Store and recover the level of image as button.setimageDrawable
             // resets drawable to default level.
             int currentLevel = item.getIcon().getLevel();
@@ -316,10 +316,10 @@ public class MainActivity extends AppCompatActivity {
 
     private static class RowItemViewHolder
     {
-        public ImageButton[] buttons;
+        public ImageView[] buttons;
 
         RowItemViewHolder(int numButtons) {
-            buttons = new ImageButton[numButtons];
+            buttons = new ImageView[numButtons];
         }
     }
 
